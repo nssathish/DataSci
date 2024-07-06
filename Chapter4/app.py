@@ -55,3 +55,14 @@ def magnitude(v: Vector) -> float:
 
 
 assert magnitude([3, 4]) == 5
+
+
+def subtract(v: Vector, w: Vector) -> Vector:
+    return [v_i - w_i for v_i, w_i in zip(v, w)]
+
+
+def squared_distance(v: Vector, w: Vector) -> float:
+    return magnitude(subtract(v, w))
+
+
+assert squared_distance([1, 1], [4, 5]) == 5

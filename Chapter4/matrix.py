@@ -1,14 +1,15 @@
 from pprint import pprint
-from typing import List, Tuple, Callable
+from typing import Tuple, Callable
 
-Matrix = List[List[float]]
-Vector = List[float]
+from Common.lib import DSA
+
+d = DSA()
 
 A = [[1, 2, 3], [4, 5, 6]]
 B = [[1, 2], [3, 4], [5, 6]]
 
 
-def shape(A: Matrix) -> Tuple[int, int]:
+def shape(A: d.Matrix) -> Tuple[int, int]:
     num_rows = len(A)
     num_cols = len(A[0]) if A else 0
 
@@ -18,21 +19,21 @@ def shape(A: Matrix) -> Tuple[int, int]:
 assert shape([[1, 2, 3], [4, 5, 6]]) == (2, 3)
 
 
-def get_row(A: Matrix, i: int) -> Vector:
+def get_row(A: d.Matrix, i: int) -> d.Vector:
     return A[i]
 
 
-def get_col(A: Matrix, j: int) -> Vector:
+def get_col(A: d.Matrix, j: int) -> d.Vector:
     return [A_i[j] for A_i in A]
 
 
 def make_matrix(
     num_rows: int, num_cols: int, entry_fn: Callable[[int, int], float]
-) -> Matrix:
+) -> d.Matrix:
     return [[entry_fn(a, b) for b in range(num_cols)] for a in range(num_rows)]
 
 
-def identity_matrix(n: int) -> Matrix:
+def identity_matrix(n: int) -> d.Matrix:
     return make_matrix(n, n, lambda a, b: 0 if a == b else 0)
 
 

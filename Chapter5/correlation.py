@@ -18,6 +18,14 @@ class CorrelationCausation:
 
         return self.la.dot(self.dv.de_mean(xs), self.dv.de_mean(ys)) / len(xs) - 1
 
+    def correlation(self, xs: List[float], ys: List[float]) -> float:
+        """Measures how much xs and ys varies in tandem about their means"""
+        stdev_x = self.dv.standard_deviation(xs)
+        stdev_y = self.dv.standard_deviation(ys)
+
+        correlation = self.covariance(xs, ys) / stdev_x / stdev_y
+        return correlation
+
 
 daily_minutes: List[float] = [
     20,
@@ -47,6 +55,19 @@ daily_minutes: List[float] = [
     98,
 ]
 daily_hours: List[float] = [minute / 60 for minute in daily_minutes]
+
 cc = CorrelationCausation()
+
 pprint(cc.covariance(num_friends, daily_minutes))
 pprint(cc.covariance(num_friends, daily_hours))
+
+pprint(cc.correlation(num_friends, daily_minutes))
+pprint(cc.correlation(num_friends, daily_hours))
+
+outlier = num_friends.index(100)  # index of outlier
+
+num_friends_good = [x for i, x in enumerate(num_friends) if i != outlier]
+daily_minutes_good = [minute for i, minute in enumerate(daily_minutes) if i != outlier]
+daily_hours_good = [hour for i, hour in enumerate(daily_hours) if i != outlier]
+pprint(cc.correlation(num_friends_good, daily_minutes_good))
+pprint(cc.correlation(num_friends_good, daily_hours_good))
